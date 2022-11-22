@@ -1,5 +1,5 @@
 import React from "react";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { listFiles } from "../firebase/utilFunctions";
 import TextContainer from "./containers/textContainer";
 import RegularText from "./typography/regularText";
