@@ -9,12 +9,10 @@ export const listFiles = async () => {
   await listAll(listRef)
     .then((res) => {
       res.items.forEach((itemRef) => {
-        console.log(itemRef);
         files.push(itemRef.name);
       });
     })
     .catch((error) => {
-      // Uh-oh, an error occurred!
       console.log(error);
     });
 

@@ -1,16 +1,17 @@
 import React from "react";
-import useAlarmFiles from "../hooks/useAlarmFiles";
+import { useQuery, useQueryClient } from "react-query";
+import { listFiles } from "../firebase/utilFunctions";
 import TextContainer from "./containers/textContainer";
 import RegularText from "./typography/regularText";
 
 const AlarmList = () => {
-  const { alarms, loading } = useAlarmFiles();
+  const { isLoading, data } = useQuery("alarms", listFiles);
 
-  if (loading) return null;
+  if (isLoading || !data) return null;
 
   return (
     <TextContainer>
-      {alarms.map((alarm) => (
+      {data.map((alarm) => (
         <RegularText key={alarm}>{alarm}</RegularText>
       ))}
     </TextContainer>
