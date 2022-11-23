@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useMutation } from "react-query";
+import { queryClient } from "../App";
 import { uploadFile } from "../firebase/utilFunctions";
 import PrimaryButton from "./buttons/primaryButton";
 import TextContainer from "./containers/textContainer";
@@ -8,7 +10,7 @@ const AlarmUpload = () => {
   const [composerName, setComposerName] = useState("");
   const [showError, setShowError] = useState(false);
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
     if (composerName.length === 0) {
       setShowError(true);
       return;
@@ -16,8 +18,12 @@ const AlarmUpload = () => {
 
     setShowError(false);
 
-    uploadFile(composerName);
+    await uploadFile(composerName);
   };
+
+  const alarmsUpload = useMutation(handleUpload, {
+    onSuccess: () => queryClient.invalidateQueries("alarms"),
+  });
 
   return (
     <TextContainer>
@@ -28,7 +34,7 @@ const AlarmUpload = () => {
         showError={showError}
         errorText="Please put your composer name!"
       />
-      <PrimaryButton title="Create Song" onPress={handleUpload} />
+      <PrimaryButton title="Create Song" onPress={alarmsUpload.mutate} />
     </TextContainer>
   );
 };

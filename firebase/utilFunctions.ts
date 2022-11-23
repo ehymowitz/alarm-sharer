@@ -33,7 +33,7 @@ export const uploadFile = async (composerName: string) => {
     const uploadRef = ref(storage, file.name);
 
     if (file.file) {
-      uploadBytes(uploadRef, file?.file, metadata).then(() => {
+      await uploadBytes(uploadRef, file?.file, metadata).then(() => {
         console.log(`uploaded: Alarm named ${file.name} by ${composerName}`);
       });
     } else {
@@ -47,7 +47,7 @@ export const uploadFile = async (composerName: string) => {
       const localF = await fetch(uri);
       const blob = await localF.blob();
 
-      uploadBytes(uploadRef, blob, metadata).then(() => {
+      await uploadBytes(uploadRef, blob, metadata).then(() => {
         console.log(`uploaded: Alarm named ${file.name} by ${composerName}`);
       });
     }

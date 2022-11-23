@@ -5,9 +5,11 @@ import TextContainer from "./containers/textContainer";
 import RegularText from "./typography/regularText";
 
 const AlarmList = () => {
-  const { isLoading, data } = useQuery("alarms", listFiles);
+  const { data, isFetching } = useQuery("alarms", listFiles);
 
-  if (isLoading || !data) return null;
+  if (isFetching) return <RegularText>Loading...</RegularText>;
+
+  if (!data || data.length === 0) return <RegularText>None</RegularText>;
 
   return (
     <TextContainer>
