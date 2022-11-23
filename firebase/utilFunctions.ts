@@ -1,6 +1,12 @@
 import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system";
-import { listAll, ref, uploadBytes, UploadMetadata } from "firebase/storage";
+import {
+  getDownloadURL,
+  listAll,
+  ref,
+  uploadBytes,
+  UploadMetadata,
+} from "firebase/storage";
 import { storage } from "./firebaseConfig";
 
 export const listFiles = async () => {
@@ -52,4 +58,9 @@ export const uploadFile = async (composerName: string) => {
       });
     }
   }
+};
+
+export const downloadFile = async (alarm: string) => {
+  const dlURL = getDownloadURL(ref(storage, alarm));
+  console.log(dlURL);
 };
