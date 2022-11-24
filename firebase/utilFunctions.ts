@@ -60,7 +60,12 @@ export const uploadFile = async (composerName: string) => {
   }
 };
 
-export const downloadFile = async (alarm: string) => {
-  const dlURL = getDownloadURL(ref(storage, alarm));
-  console.log(dlURL);
+export const downloadFile = async (alarm?: string) => {
+  if (!alarm) {
+    console.log("No alarm selected");
+    return;
+  }
+
+  const dlURL = await getDownloadURL(ref(storage, alarm));
+  return dlURL;
 };

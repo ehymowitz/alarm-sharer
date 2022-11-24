@@ -6,15 +6,17 @@ const useDownloadAlarm = () => {
   const [selectedAlarm, setSelectedAlarm] = useState<string | undefined>(
     undefined
   );
-  // const { data, isFetching } = useQuery("alarm", () =>
-  //   downloadFile(selectedAlarm || "")
-  // );
 
-  useEffect(() => {
-    console.log(selectedAlarm);
-  }, [selectedAlarm]);
+  const { data, isFetching } = useQuery(["alarm", selectedAlarm], () =>
+    downloadFile(selectedAlarm)
+  );
 
-  return { selectedAlarm, setSelectedAlarm };
+  return {
+    selectedAlarm,
+    setSelectedAlarm,
+    alarmData: data,
+    alarmFetching: isFetching,
+  };
 };
 
 export default useDownloadAlarm;
