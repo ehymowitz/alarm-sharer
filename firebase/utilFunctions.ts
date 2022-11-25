@@ -2,6 +2,7 @@ import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system";
 import {
   getDownloadURL,
+  getMetadata,
   listAll,
   ref,
   uploadBytes,
@@ -12,18 +13,17 @@ import { storage } from "./firebaseConfig";
 export const listFiles = async () => {
   const listRef = ref(storage);
 
-  const files: string[] = [];
+  const filesList = await listAll(listRef);
 
-  await listAll(listRef)
-    .then((res) => {
-      res.items.forEach((itemRef) => {
-        files.push(itemRef.name);
-      });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  const metaData = filesList.items.map(async (itemRef) => {
+    const data = await getMetadata(itemRef);
+    return {
+      name: data.name,
+      composer: data.customMetadata?.composerName || "unknown",
+    };
+  });
 
+  const files = await Promise.all(metaData);
   return files;
 };
 
@@ -67,5 +67,6 @@ export const downloadFile = async (alarm?: string) => {
   }
 
   const dlURL = await getDownloadURL(ref(storage, alarm));
+
   return dlURL;
 };

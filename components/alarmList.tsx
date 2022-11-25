@@ -1,16 +1,17 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useAtom } from "jotai";
 import React from "react";
 import { useQuery } from "react-query";
 import { listFiles } from "../firebase/utilFunctions";
-import useDownloadAlarm from "../hooks/useDownloadAlarm";
+import useDownloadAlarm, { alarmAtom } from "../hooks/useDownloadAlarm";
 import HorizontalContainer from "./containers/horizontalContainer";
 import TextContainer from "./containers/textContainer";
 import RegularText from "./typography/regularText";
 
 const AlarmList = () => {
   const { data, isFetching } = useQuery("alarms", listFiles);
-  const { selectedAlarm, setSelectedAlarm, alarmData, alarmFetching } =
-    useDownloadAlarm();
+  const { setSelectedAlarm } = useDownloadAlarm();
+  const [{ name, isFetching: alarmFetching }] = useAtom(alarmAtom);
 
   if (isFetching) return <RegularText>Loading...</RegularText>;
 
@@ -19,9 +20,9 @@ const AlarmList = () => {
   return (
     <TextContainer>
       {data.map((alarm, i) => {
-        const selected = selectedAlarm === alarm;
+        const selected = name === alarm.name;
         return (
-          <HorizontalContainer key={alarm}>
+          <HorizontalContainer key={`${alarm.name}${alarm.composer}`}>
             <Ionicons
               name={
                 selected
@@ -32,9 +33,10 @@ const AlarmList = () => {
               }
               size={16}
               color="black"
-              onPress={() => setSelectedAlarm(alarm)}
+              onPress={() => setSelectedAlarm(alarm.name)}
             />
-            <RegularText bold={selected}>{alarm}</RegularText>
+            <RegularText bold={selected}>{alarm.name}</RegularText>
+            <RegularText bold={selected}> - by: {alarm.composer}</RegularText>
           </HorizontalContainer>
         );
       })}
