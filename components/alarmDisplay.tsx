@@ -1,7 +1,8 @@
-import { Audio } from "expo-av";
 import { useAtom } from "jotai";
-import React, { useEffect } from "react";
+import React from "react";
+import { playSound, saveSound } from "../audioUtils";
 import { alarmAtom } from "../hooks/useDownloadAlarm";
+import useSoundPlayer from "../hooks/useSoundPlayer";
 import PrimaryButton from "./buttons/primaryButton";
 import Container from "./containers/container";
 import RegularText from "./typography/regularText";
@@ -9,21 +10,7 @@ import TitleText from "./typography/titleText";
 
 const AlarmDisplay = () => {
   const [{ name, data, isFetching }] = useAtom(alarmAtom);
-  const soundPlayer = new Audio.Sound();
-
-  async function playSound() {
-    if (!data) return;
-    await soundPlayer.loadAsync({ uri: data });
-    await soundPlayer.playAsync();
-  }
-
-  useEffect(() => {
-    return soundPlayer
-      ? () => {
-          soundPlayer.unloadAsync();
-        }
-      : undefined;
-  }, [soundPlayer]);
+  const soundPlayer = useSoundPlayer();
 
   return (
     <Container>
@@ -34,7 +21,11 @@ const AlarmDisplay = () => {
         <>
           <RegularText>{name}</RegularText>
 
-          <PrimaryButton title={"Play Alarm"} onPress={playSound} />
+          <PrimaryButton
+            title={"Preview Alarm"}
+            onPress={() => playSound(soundPlayer, data)}
+          />
+          <PrimaryButton title={"Use Alarm"} onPress={() => saveSound(data)} />
         </>
       )}
     </Container>
