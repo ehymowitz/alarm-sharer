@@ -1,11 +1,15 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Audio } from "expo-av";
 
 export const saveSound = async (source?: string) => {
   if (!source) return;
 
-  const { sound } = await Audio.Sound.createAsync({ uri: source });
-
-  await sound.playAsync();
+  try {
+    await AsyncStorage.setItem("@storage_Key", source);
+  } catch (e) {
+    // saving error
+    console.log("saving error:", e);
+  }
 };
 
 export const playSound = async (player: Audio.Sound, source?: string) => {
