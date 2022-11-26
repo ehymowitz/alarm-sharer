@@ -1,13 +1,16 @@
-import React, { PropsWithChildren } from "react";
-import { Button } from "react-native";
+import React from "react";
+import { Button, TouchableHighlight } from "react-native";
+import tw from "twrnc";
 
 interface PrimaryButtonProps {
   onPress?: () => void;
   title: string;
 }
 
-const PrimaryButton = ({ onPress, title }: PrimaryButtonProps) => {
-  return <Button onPress={onPress} title={title} />;
-};
+const PrimaryButton = ({ onPress, title }: PrimaryButtonProps) => (
+  <TouchableHighlight style={tw`my-2 h-10 w-full`}>
+    <Button onPress={onPress} title={title} />
+  </TouchableHighlight>
+);
 
 export default PrimaryButton;
