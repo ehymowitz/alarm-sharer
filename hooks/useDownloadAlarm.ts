@@ -12,8 +12,10 @@ const useDownloadAlarm = () => {
     undefined
   );
 
-  const { data, isFetching } = useQuery(["alarm", selectedAlarm], () =>
-    downloadFile(selectedAlarm)
+  const { data, isFetching } = useQuery(
+    ["alarm", selectedAlarm],
+    () => downloadFile(selectedAlarm),
+    { cacheTime: 0 }
   );
 
   useEffect(() => {

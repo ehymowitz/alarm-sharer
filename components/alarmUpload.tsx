@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { useMutation } from "react-query";
-import { queryClient } from "../App";
+import { useMutation, useQueryClient } from "react-query";
 import { uploadFile } from "../firebase/utilFunctions";
 import PrimaryButton from "./buttons/primaryButton";
 import TextContainer from "./containers/textContainer";
@@ -9,6 +8,7 @@ import TextBox from "./inputs/textBox";
 const AlarmUpload = () => {
   const [composerName, setComposerName] = useState("");
   const [showError, setShowError] = useState(false);
+  const queryClient = useQueryClient();
 
   const handleUpload = async () => {
     if (composerName.length === 0) {
