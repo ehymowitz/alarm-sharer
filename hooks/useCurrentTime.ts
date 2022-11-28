@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 
 const useCurrentTime = () => {
-  const [time, setTime] = useState(new Date().toLocaleTimeString());
+  const [time, setTime] = useState(
+    new Date().toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    })
+  );
 
   useEffect(() => {
     let id = setInterval(() => {
