@@ -7,7 +7,6 @@ export const saveSound = async (source?: string) => {
   try {
     await AsyncStorage.setItem("@storage_Key", source);
   } catch (e) {
-    // saving error
     console.log("saving error:", e);
   }
 };

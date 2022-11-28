@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { TextInput } from "react-native";
 import tw from "twrnc";
-import Container from "../containers/container";
 import TextContainer from "../containers/textContainer";
 import ErrorText from "../typography/errorText";
 
