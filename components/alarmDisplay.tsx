@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import React from "react";
-import { playSound, saveSound } from "../audioUtils";
+import { playSound } from "../audioUtils";
 import { alarmAtom } from "../hooks/useDownloadAlarm";
 import useSoundPlayer from "../hooks/useSoundPlayer";
 import PrimaryButton from "./buttons/primaryButton";
@@ -9,13 +9,13 @@ import RegularText from "./typography/regularText";
 import TitleText from "./typography/titleText";
 
 const AlarmDisplay = () => {
-  const [{ name, data, isFetching }] = useAtom(alarmAtom);
+  const [{ name, data }] = useAtom(alarmAtom);
   const soundPlayer = useSoundPlayer();
 
   return (
     <Container>
       <TitleText>Current Alarm</TitleText>
-      {isFetching ? (
+      {!data ? (
         <RegularText>No Alarm Selected</RegularText>
       ) : (
         <>
@@ -25,7 +25,6 @@ const AlarmDisplay = () => {
             title={"Preview Alarm"}
             onPress={() => playSound(soundPlayer, data)}
           />
-          <PrimaryButton title={"Use Alarm"} onPress={() => saveSound(data)} />
         </>
       )}
     </Container>

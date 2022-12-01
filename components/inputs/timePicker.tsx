@@ -2,7 +2,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import React from "react";
 import { Switch, TextInput, View } from "react-native";
 import tw from "twrnc";
-import { Time } from "../../screens/clock";
+import { Time, TimeObject } from "../../screens/clock";
 import Container from "../containers/container";
 import RegularText from "../typography/regularText";
 
@@ -10,13 +10,11 @@ const MAX_HOUR = 11;
 const MAX_MINUTE = 59;
 
 interface TimePickerProps {
-  time: { hour: Time; minute: Time };
-  setTime: React.Dispatch<React.SetStateAction<{ hour: Time; minute: Time }>>;
-  am: boolean;
-  setAm: React.Dispatch<React.SetStateAction<boolean>>;
+  time: TimeObject;
+  setTime: React.Dispatch<React.SetStateAction<TimeObject>>;
 }
 
-const TimePicker = ({ time, setTime, am, setAm }: TimePickerProps) => {
+const TimePicker = ({ time, setTime }: TimePickerProps) => {
   const changeTime = (value: Time, isMinutes: boolean = false) => {
     const MAX_VALUE = isMinutes ? MAX_MINUTE : MAX_HOUR;
     if (value <= MAX_VALUE || value === "") {
@@ -114,8 +112,11 @@ const TimePicker = ({ time, setTime, am, setAm }: TimePickerProps) => {
           />
         </View>
 
-        <RegularText>{am ? "AM" : "PM"}</RegularText>
-        <Switch onValueChange={() => setAm(!am)} value={am} />
+        <RegularText>{time.am ? "AM" : "PM"}</RegularText>
+        <Switch
+          onValueChange={() => setTime({ ...time, am: !time.am })}
+          value={time.am}
+        />
       </View>
     </Container>
   );

@@ -10,8 +10,8 @@ import RegularText from "./typography/regularText";
 
 const AlarmList = () => {
   const { data, isFetching } = useQuery("alarms", listFiles);
-  const { setSelectedAlarm } = useDownloadAlarm();
-  const [{ name, isFetching: alarmFetching }] = useAtom(alarmAtom);
+  const setDownloadName = useDownloadAlarm();
+  const [{ name }] = useAtom(alarmAtom);
 
   if (isFetching) return <RegularText>Loading...</RegularText>;
 
@@ -19,21 +19,15 @@ const AlarmList = () => {
 
   return (
     <TextContainer>
-      {data.map((alarm, i) => {
+      {data.map((alarm) => {
         const selected = name === alarm.name;
         return (
           <HorizontalContainer key={`${alarm.name}${alarm.composer}`}>
             <Ionicons
-              name={
-                selected
-                  ? alarmFetching
-                    ? "hourglass"
-                    : "checkmark"
-                  : "download-outline"
-              }
+              name={selected ? "checkmark" : "download-outline"}
               size={16}
               color="black"
-              onPress={() => setSelectedAlarm(alarm.name)}
+              onPress={() => setDownloadName(alarm.name)}
             />
             <RegularText bold={selected}>{alarm.name}</RegularText>
             <RegularText bold={selected}> - by: {alarm.composer}</RegularText>
