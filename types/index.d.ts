@@ -1,7 +1,6 @@
-import { Audio } from "expo-av";
-
 export type AlarmData = {
   name?: string;
-  data?: string;
+  location?: string;
+  url?: string;
   isFetching?: boolean;
 };

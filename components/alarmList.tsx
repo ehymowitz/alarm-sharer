@@ -3,23 +3,24 @@ import { useAtom } from "jotai";
 import React from "react";
 import { useQuery } from "react-query";
 import { listFiles } from "../firebase/utilFunctions";
-import useDownloadAlarm, { alarmAtom } from "../hooks/useDownloadAlarm";
+import useDownloadAlarm from "../hooks/useDownloadAlarm";
+import { alarmAtom } from "../jotai";
 import HorizontalContainer from "./containers/horizontalContainer";
 import TextContainer from "./containers/textContainer";
 import RegularText from "./typography/regularText";
 
 const AlarmList = () => {
-  const { data, isFetching } = useQuery("alarms", listFiles);
+  const { data: alarms, isFetching } = useQuery("alarms", listFiles);
   const setDownloadName = useDownloadAlarm();
   const [{ name }] = useAtom(alarmAtom);
 
   if (isFetching) return <RegularText>Loading...</RegularText>;
 
-  if (!data || data.length === 0) return <RegularText>None</RegularText>;
+  if (!alarms || alarms.length === 0) return <RegularText>None</RegularText>;
 
   return (
     <TextContainer>
-      {data.map((alarm) => {
+      {alarms.map((alarm) => {
         const selected = name === alarm.name;
         return (
           <HorizontalContainer key={`${alarm.name}${alarm.composer}`}>

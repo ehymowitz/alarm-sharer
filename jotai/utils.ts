@@ -1,6 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { atom, PrimitiveAtom, SetStateAction, WritableAtom } from "jotai";
-import { AlarmData } from "../hooks/hookTypes";
 
 export const atomWithAsyncStorage = <T extends any>(
   key: string,
@@ -17,7 +16,7 @@ export const atomWithAsyncStorage = <T extends any>(
   };
   const derivedAtom = atom(
     (get) => get(baseAtom),
-    (get, set, update) => {
+    (get, set, update: T) => {
       const nextValue =
         typeof update === "function" ? update(get(baseAtom)) : update;
       set(baseAtom, nextValue);
