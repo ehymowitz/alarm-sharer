@@ -1,30 +1,32 @@
 import { useAtom } from "jotai";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { downloadFile } from "../firebase/utilFunctions";
-import { atomWithAsyncStorage } from "../jotaiUtils";
-import { AlarmData } from "./hookTypes";
-
-export const alarmAtom = atomWithAsyncStorage<AlarmData>("@storage_Key", {});
+import { replaceDownloadedFile } from "../firebase/utilFunctions";
+import { alarmAtom } from "../jotai";
 
 const useDownloadAlarm = () => {
-  const [, setAlarmData] = useAtom(alarmAtom);
+  const [alarm, setAlarmData] = useAtom(alarmAtom);
   const [downloadName, setDownloadName] = useState<string>();
+  const [downloadProgress, setDownloadProgress] = useState<number>();
 
   const {} = useQuery(
     ["alarm", downloadName],
-    () => downloadFile(downloadName),
+    () => replaceDownloadedFile(setDownloadProgress, downloadName, alarm.name),
     {
       cacheTime: 0,
       onSuccess: (data) => {
         if (data) {
-          setAlarmData({ name: downloadName, data });
+          setAlarmData({
+            name: downloadName,
+            url: data.url,
+            location: data.location,
+          });
         }
       },
     }
   );
 
-  return setDownloadName;
+  return { downloadName, setDownloadName, downloadProgress };
 };
 
 export default useDownloadAlarm;

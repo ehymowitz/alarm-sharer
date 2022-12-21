@@ -1,18 +1,17 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useAtom } from "jotai";
 import React from "react";
+import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { useQuery } from "react-query";
 import { listFiles } from "../firebase/utilFunctions";
 import useDownloadAlarm from "../hooks/useDownloadAlarm";
-import { alarmAtom } from "../jotai";
 import HorizontalContainer from "./containers/horizontalContainer";
 import TextContainer from "./containers/textContainer";
 import RegularText from "./typography/regularText";
 
 const AlarmList = () => {
   const { data: alarms, isFetching } = useQuery("alarms", listFiles);
-  const setDownloadName = useDownloadAlarm();
-  const [{ name }] = useAtom(alarmAtom);
+  const { downloadName, setDownloadName, downloadProgress } =
+    useDownloadAlarm();
 
   if (isFetching) return <RegularText>Loading...</RegularText>;
 
@@ -21,18 +20,26 @@ const AlarmList = () => {
   return (
     <TextContainer>
       {alarms.map((alarm) => {
-        const selected = name === alarm.name;
+        const selected = alarm.name === downloadName;
         return (
-          <HorizontalContainer key={`${alarm.name}${alarm.composer}`}>
-            <Ionicons
-              name={selected ? "checkmark" : "download-outline"}
-              size={16}
-              color="black"
-              onPress={() => setDownloadName(alarm.name)}
-            />
-            <RegularText bold={selected}>{alarm.name}</RegularText>
-            <RegularText bold={selected}> - by: {alarm.composer}</RegularText>
-          </HorizontalContainer>
+          <TouchableOpacity
+            key={`${alarm.name}${alarm.composer}`}
+            onPress={() => setDownloadName(alarm.name)}
+          >
+            <HorizontalContainer>
+              <Ionicons
+                name={selected ? "checkmark" : "download-outline"}
+                size={16}
+                color="black"
+              />
+              <RegularText bold={selected}>{alarm.name}</RegularText>
+              <RegularText bold={selected}>
+                {" "}
+                - by: {alarm.composer}{" "}
+              </RegularText>
+              {selected && downloadProgress && <ActivityIndicator />}
+            </HorizontalContainer>
+          </TouchableOpacity>
         );
       })}
     </TextContainer>

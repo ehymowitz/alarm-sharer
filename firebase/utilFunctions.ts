@@ -9,6 +9,7 @@ import {
   UploadMetadata,
 } from "firebase/storage";
 import { storage } from "./firebaseConfig";
+import * as Device from "expo-device";
 
 export const listFiles = async () => {
   const listRef = ref(storage);
@@ -60,13 +61,54 @@ export const uploadFile = async (composerName: string) => {
   }
 };
 
-export const downloadFile = async (alarm?: string) => {
-  if (!alarm) {
+export const replaceDownloadedFile = async (
+  setDownloadProgress: React.Dispatch<React.SetStateAction<number | undefined>>,
+  newAlarm?: string,
+  oldAlarm?: string
+) => {
+  if (!newAlarm) {
     console.log("No alarm selected");
     return;
   }
 
-  const dlURL = await getDownloadURL(ref(storage, alarm));
+  const dlURL = await getDownloadURL(ref(storage, newAlarm));
+  let dlLocation: string | undefined;
 
-  return dlURL;
+  if (Device.brand) {
+    const callback = (downloadProgress: any) => {
+      const progress =
+        downloadProgress.totalBytesWritten /
+        downloadProgress.totalBytesExpectedToWrite;
+
+      setDownloadProgress(progress);
+
+      if (progress === 1) {
+        setDownloadProgress(undefined);
+      }
+    };
+
+    const downloadResumable = FileSystem.createDownloadResumable(
+      dlURL,
+      FileSystem.documentDirectory + newAlarm,
+      {},
+      callback
+    );
+
+    if (oldAlarm) {
+      try {
+        await FileSystem.deleteAsync(FileSystem.documentDirectory + oldAlarm);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+    try {
+      const dlRes = await downloadResumable.downloadAsync();
+      dlLocation = dlRes?.uri;
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  return { url: dlURL, location: dlLocation };
 };
