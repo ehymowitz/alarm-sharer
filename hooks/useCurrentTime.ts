@@ -1,21 +1,16 @@
 import { useEffect, useState } from "react";
 
+const getTimeObject = () => {
+  const date = new Date();
+  const hours = date.getHours();
+  return { hour: hours % 12, minute: date.getMinutes(), am: hours < 12 };
+};
 const useCurrentTime = () => {
-  const [time, setTime] = useState(
-    new Date().toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    })
-  );
+  const [time, setTime] = useState(getTimeObject());
 
   useEffect(() => {
     let id = setInterval(() => {
-      setTime(
-        new Date().toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        })
-      );
+      setTime(getTimeObject());
     }, 1000);
 
     return () => clearInterval(id);

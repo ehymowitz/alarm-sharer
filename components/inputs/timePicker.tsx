@@ -2,7 +2,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import React from "react";
 import { Switch, TextInput, View } from "react-native";
 import tw from "twrnc";
-import { Time, TimeObject } from "../../screens/clock";
+import { TimeObject } from "../../types";
 import Container from "../containers/container";
 import RegularText from "../typography/regularText";
 
@@ -15,9 +15,9 @@ interface TimePickerProps {
 }
 
 const TimePicker = ({ time, setTime }: TimePickerProps) => {
-  const changeTime = (value: Time, isMinutes: boolean = false) => {
+  const changeTime = (value: number, isMinutes: boolean = false) => {
     const MAX_VALUE = isMinutes ? MAX_MINUTE : MAX_HOUR;
-    if (value <= MAX_VALUE || value === "") {
+    if (value <= MAX_VALUE) {
       const newTime = isMinutes
         ? { ...time, minute: value }
         : { ...time, hour: value };
@@ -27,7 +27,7 @@ const TimePicker = ({ time, setTime }: TimePickerProps) => {
   };
 
   const incrementedTime = (
-    value: Time,
+    value: number,
     max_value: number,
     increment: boolean = true
   ) => {
@@ -55,7 +55,7 @@ const TimePicker = ({ time, setTime }: TimePickerProps) => {
       <View style={tw`flex-row`}>
         <TextInput
           style={tw`h-10 bg-white p-2 my-2`}
-          onChangeText={(text) => changeTime(parseInt(text) || "")}
+          onChangeText={(text) => changeTime(parseInt(text))}
           value={time?.hour.toString()}
           placeholder="Hours"
         />
@@ -83,7 +83,7 @@ const TimePicker = ({ time, setTime }: TimePickerProps) => {
 
         <TextInput
           style={tw`h-10 bg-white p-2 my-2`}
-          onChangeText={(text) => changeTime(parseInt(text) || "", true)}
+          onChangeText={(text) => changeTime(parseInt(text), true)}
           value={time?.minute.toString()}
           placeholder="Minutes"
         />
