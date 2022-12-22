@@ -1,17 +1,19 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useAtom } from "jotai";
 import React from "react";
 import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { useQuery } from "react-query";
 import { listFiles } from "../firebase/utilFunctions";
 import useDownloadAlarm from "../hooks/useDownloadAlarm";
+import { alarmAtom } from "../jotai";
 import HorizontalContainer from "./containers/horizontalContainer";
 import TextContainer from "./containers/textContainer";
 import RegularText from "./typography/regularText";
 
 const AlarmList = () => {
   const { data: alarms, isFetching } = useQuery("alarms", listFiles);
-  const { downloadName, setDownloadName, downloadProgress } =
-    useDownloadAlarm();
+  const { downloadName, setDownloadName, downloading } = useDownloadAlarm();
+  const [{ name }] = useAtom(alarmAtom);
 
   if (isFetching) return <RegularText>Loading...</RegularText>;
 
@@ -20,7 +22,7 @@ const AlarmList = () => {
   return (
     <TextContainer>
       {alarms.map((alarm) => {
-        const selected = alarm.name === downloadName;
+        const selected = alarm.name === downloadName || alarm.name === name;
         return (
           <TouchableOpacity
             key={`${alarm.name}${alarm.composer}`}
@@ -37,8 +39,8 @@ const AlarmList = () => {
                 {" "}
                 - by: {alarm.composer}{" "}
               </RegularText>
-              {selected && downloadProgress && <ActivityIndicator />}
             </HorizontalContainer>
+            {selected && downloading && <ActivityIndicator />}
           </TouchableOpacity>
         );
       })}

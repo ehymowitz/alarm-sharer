@@ -62,7 +62,6 @@ export const uploadFile = async (composerName: string) => {
 };
 
 export const replaceDownloadedFile = async (
-  setDownloadProgress: React.Dispatch<React.SetStateAction<number | undefined>>,
   newAlarm?: string,
   oldAlarm?: string
 ) => {
@@ -75,23 +74,10 @@ export const replaceDownloadedFile = async (
   let dlLocation: string | undefined;
 
   if (Device.brand) {
-    const callback = (downloadProgress: any) => {
-      const progress =
-        downloadProgress.totalBytesWritten /
-        downloadProgress.totalBytesExpectedToWrite;
-
-      setDownloadProgress(progress);
-
-      if (progress === 1) {
-        setDownloadProgress(undefined);
-      }
-    };
-
     const downloadResumable = FileSystem.createDownloadResumable(
       dlURL,
       FileSystem.documentDirectory + newAlarm,
-      {},
-      callback
+      {}
     );
 
     if (oldAlarm) {
@@ -106,8 +92,13 @@ export const replaceDownloadedFile = async (
       const dlRes = await downloadResumable.downloadAsync();
       dlLocation = dlRes?.uri;
     } catch (e) {
-      console.error(e);
+      console.log(e);
     }
+    // const files = await FileSystem.readDirectoryAsync(
+    //   FileSystem.documentDirectory || ""
+    // );
+
+    // console.log(files);
   }
 
   return { url: dlURL, location: dlLocation };

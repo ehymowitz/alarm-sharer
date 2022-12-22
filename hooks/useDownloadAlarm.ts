@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { replaceDownloadedFile } from "../firebase/utilFunctions";
 import { alarmAtom } from "../jotai";
@@ -7,11 +7,15 @@ import { alarmAtom } from "../jotai";
 const useDownloadAlarm = () => {
   const [alarm, setAlarmData] = useAtom(alarmAtom);
   const [downloadName, setDownloadName] = useState<string>();
-  const [downloadProgress, setDownloadProgress] = useState<number>();
+  const [downloading, setDownloading] = useState(false);
 
-  const {} = useQuery(
+  const { isFetching } = useQuery(
     ["alarm", downloadName],
-    () => replaceDownloadedFile(setDownloadProgress, downloadName, alarm.name),
+    () => {
+      setDownloading(true);
+      setAlarmData({ ...alarm, name: "" });
+      return replaceDownloadedFile(downloadName, alarm.name);
+    },
     {
       cacheTime: 0,
       onSuccess: (data) => {
@@ -22,11 +26,16 @@ const useDownloadAlarm = () => {
             location: data.location,
           });
         }
+        setDownloading(false);
       },
     }
   );
 
-  return { downloadName, setDownloadName, downloadProgress };
+  useEffect(() => {
+    setDownloading(isFetching);
+  }, [isFetching]);
+
+  return { downloadName, setDownloadName, downloading };
 };
 
 export default useDownloadAlarm;
