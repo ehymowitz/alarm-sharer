@@ -4,9 +4,3 @@ export interface AlarmData {
   url?: string;
   isFetching?: boolean;
 }
-
-export interface TimeObject {
-  hour: number;
-  minute: number;
-  am: boolean;
-}

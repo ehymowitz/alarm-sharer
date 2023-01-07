@@ -1,6 +1,5 @@
 import { useAtom } from "jotai";
 import React from "react";
-import { playSound } from "../audioUtils";
 import useSoundPlayer from "../hooks/useSoundPlayer";
 import { alarmAtom } from "../jotai";
 import PrimaryButton from "./buttons/primaryButton";
@@ -10,7 +9,7 @@ import TitleText from "./typography/titleText";
 
 const AlarmDisplay = () => {
   const [{ name, url }] = useAtom(alarmAtom);
-  const soundPlayer = useSoundPlayer();
+  const setSound = useSoundPlayer();
 
   return (
     <Container>
@@ -23,7 +22,7 @@ const AlarmDisplay = () => {
 
           <PrimaryButton
             title={"Preview Alarm"}
-            onPress={() => playSound(soundPlayer, url)}
+            onPress={() => setSound(url)}
           />
         </>
       )}

@@ -1,18 +1,33 @@
 import { Audio } from "expo-av";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const useSoundPlayer = () => {
   const soundPlayer = new Audio.Sound();
+  const [sound, setSound] = useState<string>();
+
+  const playSound = async (soundLocation: string) => {
+    try {
+      await soundPlayer.loadAsync({ uri: soundLocation });
+      await soundPlayer.playAsync();
+      setSound(undefined);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const unloadSound = async () => {
+    await soundPlayer.unloadAsync();
+  };
 
   useEffect(() => {
-    return soundPlayer
-      ? () => {
-          soundPlayer.unloadAsync();
-        }
-      : undefined;
-  }, [soundPlayer]);
+    if (sound) {
+      playSound(sound);
+    } else {
+      unloadSound();
+    }
+  }, [sound]);
 
-  return soundPlayer;
+  return setSound;
 };
 
 export default useSoundPlayer;
