@@ -8,7 +8,6 @@ import RegularText from "../components/typography/regularText";
 import TitleText from "../components/typography/titleText";
 import useAlarmTime from "../hooks/useAlarmTime";
 import { alarmAtom } from "../jotai";
-import { schedulePushNotification } from "../notifications";
 
 const Clock = () => {
   const {
@@ -20,20 +19,6 @@ const Clock = () => {
   } = useAlarmTime();
 
   const [alarmData] = useAtom(alarmAtom);
-  // const setSound = useSoundPlayer();
-
-  // Notifications.setNotificationHandler({
-  //   handleNotification: async () => {
-  //     if (alarmData.location) {
-  //       setSound(alarmData.location);
-  //     }
-  //     return {
-  //       shouldShowAlert: true,
-  //       shouldPlaySound: false,
-  //       shouldSetBadge: true,
-  //     };
-  //   },
-  // });
 
   return (
     <Container>
@@ -47,12 +32,7 @@ const Clock = () => {
             setIsChecked={setPlayAlarm}
           />
           <RegularText>Alarm to play: {alarmData.name}</RegularText>
-          {!alarmGoesOff && (
-            <PrimaryButton
-              title="Snooze"
-              onPress={() => schedulePushNotification()}
-            />
-          )}
+          {!alarmGoesOff && <PrimaryButton title="Snooze" onPress={() => {}} />}
         </>
       ) : (
         <TitleText>No Alarm Selected</TitleText>
