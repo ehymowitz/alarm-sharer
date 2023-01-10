@@ -9,6 +9,7 @@ import RegularText from "../components/typography/regularText";
 import TitleText from "../components/typography/titleText";
 import useAlarmTime from "../hooks/useAlarmTime";
 import { alarmAtom } from "../jotai";
+import * as CustomAlarmSounds from "custom-alarm-sounds";
 
 const Clock = () => {
   const {
@@ -28,7 +29,17 @@ const Clock = () => {
       {alarmData.name && selectedTime ? (
         <>
           {Device.brand ? (
-            <PrimaryButton title="Set Alarm" />
+            <PrimaryButton
+              title="Set Alarm"
+              // onPress={() =>
+              //   CustomAlarmSounds.setAlarm(
+              //     1,
+              //     2,
+              //     "artist-name",
+              //     "alarm-location"
+              //   )
+              // }
+            />
           ) : (
             <>
               <TitleText>Play Alarm?</TitleText>
