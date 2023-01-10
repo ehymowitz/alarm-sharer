@@ -1,3 +1,4 @@
+import * as Device from "expo-device";
 import { useAtom } from "jotai";
 import React from "react";
 import PrimaryButton from "../components/buttons/primaryButton";
@@ -24,18 +25,26 @@ const Clock = () => {
     <Container>
       <TitleText>Clock</TitleText>
       <TimePicker time={selectedTime} setTime={setSelectedTime} />
-      {alarmData.name ? (
+      {alarmData.name && selectedTime ? (
         <>
-          <TitleText>Play Alarm?</TitleText>
-          <CheckboxComponent
-            isChecked={playAlarm}
-            setIsChecked={setPlayAlarm}
-          />
-          <RegularText>Alarm to play: {alarmData.name}</RegularText>
-          {!alarmGoesOff && <PrimaryButton title="Snooze" onPress={() => {}} />}
+          {Device.brand ? (
+            <PrimaryButton title="Set Alarm" />
+          ) : (
+            <>
+              <TitleText>Play Alarm?</TitleText>
+              <CheckboxComponent
+                isChecked={playAlarm}
+                setIsChecked={setPlayAlarm}
+              />
+              <RegularText>Alarm to play: {alarmData.name}</RegularText>
+              {!alarmGoesOff && (
+                <PrimaryButton title="Snooze" onPress={() => {}} />
+              )}
+            </>
+          )}
         </>
       ) : (
-        <TitleText>No Alarm Selected</TitleText>
+        <TitleText>Select and alarm and a time</TitleText>
       )}
     </Container>
   );
