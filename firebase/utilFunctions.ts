@@ -1,5 +1,7 @@
+import * as Device from "expo-device";
 import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system";
+import { StorageAccessFramework } from "expo-file-system";
 import {
   getDownloadURL,
   getMetadata,
@@ -9,7 +11,6 @@ import {
   UploadMetadata,
 } from "firebase/storage";
 import { storage } from "./firebaseConfig";
-import * as Device from "expo-device";
 
 export const listFiles = async () => {
   const listRef = ref(storage);
@@ -91,15 +92,50 @@ export const replaceDownloadedFile = async (
     try {
       const dlRes = await downloadResumable.downloadAsync();
       dlLocation = dlRes?.uri;
+      if (dlLocation) {
+        const newLocation = await saveAndroidFile(dlLocation, newAlarm);
+        if (newLocation) dlLocation = newLocation;
+      }
     } catch (e) {
       console.log(e);
     }
-    // const files = await FileSystem.readDirectoryAsync(
-    //   FileSystem.documentDirectory || ""
-    // );
-
-    // console.log(files);
   }
 
   return { url: dlURL, location: dlLocation };
+};
+
+const saveAndroidFile = async (fileUri: string, fileName: string) => {
+  let location: string | undefined;
+  try {
+    const fileString = await FileSystem.readAsStringAsync(fileUri, {
+      encoding: FileSystem.EncodingType.Base64,
+    });
+
+    const permissions =
+      await StorageAccessFramework.requestDirectoryPermissionsAsync();
+    if (!permissions.granted) {
+      return;
+    }
+
+    try {
+      await StorageAccessFramework.createFileAsync(
+        permissions.directoryUri,
+        fileName,
+        "audio/mpeg"
+      )
+        .then(async (uri) => {
+          await FileSystem.writeAsStringAsync(uri, fileString, {
+            encoding: FileSystem.EncodingType.Base64,
+          });
+          location = uri;
+        })
+        .catch((e) => {});
+    } catch (e: any) {
+      throw new Error(e);
+    }
+  } catch (err: any) {
+    throw new Error(err);
+  }
+
+  return location;
 };
