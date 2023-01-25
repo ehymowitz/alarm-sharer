@@ -9,7 +9,8 @@ import RegularText from "../components/typography/regularText";
 import TitleText from "../components/typography/titleText";
 import useAlarmTime from "../hooks/useAlarmTime";
 import { alarmAtom } from "../jotai";
-import * as CustomAlarmSounds from "custom-alarm-sounds";
+
+const CustomAlarmSounds = Device.brand ? require("custom-alarm-sounds") : null;
 
 const Clock = () => {
   const {
@@ -31,14 +32,16 @@ const Clock = () => {
           {Device.brand ? (
             <PrimaryButton
               title="Set Alarm"
-              // onPress={() =>
-              //   CustomAlarmSounds.setAlarm(
-              //     1,
-              //     2,
-              //     "artist-name",
-              //     "alarm-location"
-              //   )
-              // }
+              onPress={() => {
+                if (alarmData.location && Device.brand) {
+                  CustomAlarmSounds.setAlarm(
+                    selectedTime.hour(),
+                    selectedTime.minute(),
+                    alarmData.name || "",
+                    alarmData.location
+                  );
+                }
+              }}
             />
           ) : (
             <>
@@ -48,9 +51,6 @@ const Clock = () => {
                 setIsChecked={setPlayAlarm}
               />
               <RegularText>Alarm to play: {alarmData.name}</RegularText>
-              {!alarmGoesOff && (
-                <PrimaryButton title="Snooze" onPress={() => {}} />
-              )}
             </>
           )}
         </>
