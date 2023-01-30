@@ -34,7 +34,7 @@ const AlarmUpload = () => {
         showError={showError}
         errorText="Please put your composer name!"
       />
-      <PrimaryButton title="Create Song" onPress={alarmsUpload.mutate} />
+      <PrimaryButton title="Upload Song" onPress={alarmsUpload.mutate} />
     </TextContainer>
   );
 };

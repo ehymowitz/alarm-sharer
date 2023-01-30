@@ -94,7 +94,15 @@ export const replaceDownloadedFile = async (
       dlLocation = dlRes?.uri;
       if (dlLocation) {
         const newLocation = await saveAndroidFile(dlLocation, newAlarm);
-        if (newLocation) dlLocation = newLocation;
+        if (newLocation)
+          dlLocation = `/storage/emulated/0/${
+            newLocation
+              .replace(/%3A/g, ":")
+              .replace(/%2F/g, "/")
+              .replace(/%20/g, " ")
+              .split(":")
+              .slice(-1)[0]
+          }`;
       }
     } catch (e) {
       console.log(e);
