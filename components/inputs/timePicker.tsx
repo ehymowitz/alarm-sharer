@@ -15,14 +15,14 @@ interface TimePickerProps {
 const TimePicker = ({ time, setTime }: TimePickerProps) => {
   const [viewHours, setViewHours] = useState(true);
 
-  const handleChangeDevice = (time?: Date) => {
+  const handleTimeChange = (time?: Date) => {
     setTime(dayjs(time));
   };
 
   const showTime = () => {
     DateTimePickerAndroid.open({
       value: (time || dayjs()).toDate(),
-      onChange: (_e, date) => handleChangeDevice(date),
+      onChange: (_e, date) => handleTimeChange(date),
       mode: "time",
       is24Hour: true,
     });
@@ -38,7 +38,7 @@ const TimePicker = ({ time, setTime }: TimePickerProps) => {
           <ClockPicker
             date={time}
             onChange={(newValue) => {
-              setTime(newValue || undefined);
+              handleTimeChange(newValue?.toDate() || undefined);
               if (viewHours) {
                 setViewHours(false);
               }

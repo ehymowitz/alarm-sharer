@@ -9,21 +9,18 @@ const useAlarmTime = () => {
   const currentTime = dayjs();
   const [selectedTime, setSelectedTime] = useState<Dayjs | undefined>();
   const [playAlarm, setPlayAlarm] = useState(false);
+  const [alarmData] = useAtom(alarmAtom);
 
   const setSound = useSoundPlayer();
 
   const alarmGoesOff =
-    JSON.stringify(currentTime) === JSON.stringify(selectedTime) && playAlarm;
-  const [alarmData] = useAtom(alarmAtom);
+    JSON.stringify(currentTime) === JSON.stringify(selectedTime) &&
+    playAlarm &&
+    alarmData.url;
 
-  // Should only play here if on web - otherwise want to set notification
-  if (alarmGoesOff && playAlarm) {
-    if (!Device.brand && alarmData.url) {
-      setSound(alarmData.url);
-      setPlayAlarm(false);
-    } else {
-      // If device play from local - SET NOTIFICATION TRIGGER
-    }
+  if (alarmGoesOff) {
+    setSound(alarmData.url);
+    setPlayAlarm(false);
   }
 
   return {

@@ -1,8 +1,10 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
+import * as Device from "expo-device";
 import React from "react";
 import { StatusBar } from "react-native";
+import tw from "twrnc";
 import Home from "../screens/alarm";
 import Clock from "../screens/clock";
 import { RootStackParamList } from "./navigation";
@@ -18,7 +20,9 @@ const RootStack = createBottomTabNavigator<RootStackParamList>();
 
 const RootStackNavigator = () => {
   return (
-    <RootStack.Navigator>
+    <RootStack.Navigator
+      screenOptions={{ tabBarStyle: tw.style(Device.brand ? `` : `hidden`) }}
+    >
       <RootStack.Screen
         name="Alarm"
         component={Home}
@@ -29,16 +33,18 @@ const RootStackNavigator = () => {
           ),
         }}
       />
-      <RootStack.Screen
-        name="Clock"
-        component={Clock}
-        options={{
-          headerShown: false,
-          tabBarIcon: () => (
-            <Ionicons name="alarm-outline" size={24} color="black" />
-          ),
-        }}
-      />
+      {Device.brand && (
+        <RootStack.Screen
+          name="Clock"
+          component={Clock}
+          options={{
+            headerShown: false,
+            tabBarIcon: () => (
+              <Ionicons name="alarm-outline" size={24} color="black" />
+            ),
+          }}
+        />
+      )}
     </RootStack.Navigator>
   );
 };

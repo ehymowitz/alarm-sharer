@@ -13,13 +13,8 @@ import { alarmAtom } from "../jotai";
 const CustomAlarmSounds = Device.brand ? require("custom-alarm-sounds") : null;
 
 const Clock = () => {
-  const {
-    selectedTime,
-    playAlarm,
-    setPlayAlarm,
-    setSelectedTime,
-    alarmGoesOff,
-  } = useAlarmTime();
+  const { selectedTime, playAlarm, setPlayAlarm, setSelectedTime } =
+    useAlarmTime();
 
   const [alarmData] = useAtom(alarmAtom);
 
@@ -27,7 +22,7 @@ const Clock = () => {
     <Container>
       <TitleText>Clock</TitleText>
       <TimePicker time={selectedTime} setTime={setSelectedTime} />
-      {alarmData.name && selectedTime ? (
+      {alarmData.displayValues.name && selectedTime ? (
         <>
           {Device.brand ? (
             <PrimaryButton
@@ -37,7 +32,7 @@ const Clock = () => {
                   CustomAlarmSounds.setAlarm(
                     selectedTime.hour(),
                     selectedTime.minute(),
-                    alarmData.name || "",
+                    alarmData.displayValues.composer || "",
                     alarmData.location
                   );
                 }
@@ -50,7 +45,9 @@ const Clock = () => {
                 isChecked={playAlarm}
                 setIsChecked={setPlayAlarm}
               />
-              <RegularText>Alarm to play: {alarmData.name}</RegularText>
+              <RegularText>
+                Alarm to play: {alarmData.displayValues.name}
+              </RegularText>
             </>
           )}
         </>
