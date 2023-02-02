@@ -22,7 +22,7 @@ const Clock = () => {
     <Container>
       <TitleText>Clock</TitleText>
       <TimePicker time={selectedTime} setTime={setSelectedTime} />
-      {alarmData.displayValues.name && selectedTime ? (
+      {alarmData.displayValues?.name && selectedTime ? (
         <>
           {Device.brand ? (
             <PrimaryButton
@@ -32,7 +32,8 @@ const Clock = () => {
                   CustomAlarmSounds.setAlarm(
                     selectedTime.hour(),
                     selectedTime.minute(),
-                    alarmData.displayValues.composer || "",
+                    `${alarmData.displayValues?.composer} - ${alarmData.displayValues?.name}` ||
+                      "",
                     alarmData.location
                   );
                 }

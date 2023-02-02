@@ -1,5 +1,5 @@
 export interface AlarmData {
-  displayValues: AlarmDisplayInfo;
+  displayValues?: AlarmDisplayInfo;
   location?: string;
   url?: string;
 }
