@@ -33,6 +33,7 @@ export const listFiles = async (): Promise<AlarmDisplayInfo[]> => {
 export const uploadFile = async (composerName: string) => {
   const file = await DocumentPicker.getDocumentAsync({
     copyToCacheDirectory: false,
+    type: "audio/*",
   });
 
   if (file.type === "success" && file.name) {
