@@ -10,9 +10,10 @@ import {
   uploadBytes,
   UploadMetadata,
 } from "firebase/storage";
+import { AlarmDisplayInfo } from "../types";
 import { storage } from "./firebaseConfig";
 
-export const listFiles = async () => {
+export const listFiles = async (): Promise<AlarmDisplayInfo[]> => {
   const listRef = ref(storage);
 
   const filesList = await listAll(listRef);
@@ -63,14 +64,9 @@ export const uploadFile = async (composerName: string) => {
 };
 
 export const replaceDownloadedFile = async (
-  newAlarm?: string,
+  newAlarm: string,
   oldAlarm?: string
 ) => {
-  if (!newAlarm) {
-    console.log("No alarm selected");
-    return;
-  }
-
   const dlURL = await getDownloadURL(ref(storage, newAlarm));
   let dlLocation: string | undefined;
 

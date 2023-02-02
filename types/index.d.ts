@@ -1,6 +1,10 @@
 export interface AlarmData {
-  name?: string;
+  displayValues: AlarmDisplayInfo;
   location?: string;
   url?: string;
-  isFetching?: boolean;
+}
+
+export interface AlarmDisplayInfo {
+  name?: string;
+  composer: string;
 }

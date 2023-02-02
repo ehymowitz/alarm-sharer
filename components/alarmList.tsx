@@ -6,14 +6,16 @@ import { useQuery } from "react-query";
 import { listFiles } from "../firebase/utilFunctions";
 import useDownloadAlarm from "../hooks/useDownloadAlarm";
 import { alarmAtom } from "../jotai";
+import { AlarmDisplayInfo } from "../types";
+import { ShallowEqual } from "../utilFunctions";
 import HorizontalContainer from "./containers/horizontalContainer";
 import TextContainer from "./containers/textContainer";
 import RegularText from "./typography/regularText";
 
 const AlarmList = () => {
   const { data: alarms, isFetching } = useQuery("alarms", listFiles);
-  const { downloadName, setDownloadName, downloading } = useDownloadAlarm();
-  const [{ name }] = useAtom(alarmAtom);
+  const { setDownloadName, alarmDownloading } = useDownloadAlarm();
+  const [storedAlarm] = useAtom(alarmAtom);
 
   if (isFetching) return <RegularText>Loading...</RegularText>;
 
@@ -22,11 +24,15 @@ const AlarmList = () => {
   return (
     <TextContainer>
       {alarms.map((alarm) => {
-        const selected = alarm.name === downloadName || alarm.name === name;
+        const selected = ShallowEqual<AlarmDisplayInfo>(
+          alarm,
+          storedAlarm.displayValues
+        );
+
         return (
           <TouchableOpacity
             key={`${alarm.name}${alarm.composer}`}
-            onPress={() => setDownloadName(alarm.name)}
+            onPress={() => setDownloadName(alarm)}
           >
             <HorizontalContainer>
               <Ionicons
@@ -40,7 +46,7 @@ const AlarmList = () => {
                 - by: {alarm.composer}{" "}
               </RegularText>
             </HorizontalContainer>
-            {selected && downloading && <ActivityIndicator />}
+            {selected && alarmDownloading && <ActivityIndicator />}
           </TouchableOpacity>
         );
       })}

@@ -8,7 +8,7 @@ import RegularText from "./typography/regularText";
 import TitleText from "./typography/titleText";
 
 const AlarmDisplay = () => {
-  const [{ name, url }] = useAtom(alarmAtom);
+  const [{ displayValues, url }] = useAtom(alarmAtom);
   const setSound = useSoundPlayer();
 
   return (
@@ -18,7 +18,9 @@ const AlarmDisplay = () => {
         <RegularText>No Alarm Selected</RegularText>
       ) : (
         <>
-          <RegularText>{name}</RegularText>
+          <RegularText>
+            {displayValues.name} - {displayValues.composer}
+          </RegularText>
 
           <PrimaryButton
             title={"Preview Alarm"}
