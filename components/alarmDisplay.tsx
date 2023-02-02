@@ -19,7 +19,7 @@ const AlarmDisplay = () => {
       ) : (
         <>
           <RegularText>
-            {displayValues.name} - {displayValues.composer}
+            {displayValues?.name} - {displayValues?.composer}
           </RegularText>
 
           <PrimaryButton
