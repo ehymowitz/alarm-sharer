@@ -26,8 +26,6 @@
       },
       "package": "com.ehymowitz.alarmsharer"
     },
-    "web": {
-      "favicon": "./assets/favicon.ico"
-    }
+    "web": {}
   }
 }
