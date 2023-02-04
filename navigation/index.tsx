@@ -12,7 +12,7 @@ import { RootStackParamList } from "./navigation";
 const Navigation = () => (
   <NavigationContainer>
     <RootStackNavigator />
-    <StatusBar />
+    <StatusBar style="dark" />
   </NavigationContainer>
 );
 
