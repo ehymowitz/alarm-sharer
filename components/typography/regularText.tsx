@@ -13,7 +13,9 @@ const RegularText = ({
   addtionalStyles = "",
 }: PropsWithChildren<RegularTextProps>) => {
   return (
-    <Text style={tw.style(bold && "font-bold", addtionalStyles)}>
+    <Text
+      style={tw.style(`text-gray-50`, bold && "font-bold", addtionalStyles)}
+    >
       {children}
     </Text>
   );

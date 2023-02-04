@@ -7,7 +7,7 @@ import TitleText from "../components/typography/titleText";
 
 const Home = () => {
   return (
-    <Container>
+    <Container topLevel additionalStyles="bg-slate-700 h-full px-5">
       <TitleText>Available Alarms</TitleText>
       <AlarmList />
       <AlarmUpload />

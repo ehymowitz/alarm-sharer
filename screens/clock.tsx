@@ -19,8 +19,7 @@ const Clock = () => {
   const [alarmData] = useAtom(alarmAtom);
 
   return (
-    <Container>
-      <TitleText>Clock</TitleText>
+    <Container topLevel additionalStyles="bg-slate-700 h-full px-5">
       <TimePicker time={selectedTime} setTime={setSelectedTime} />
       {alarmData.displayValues?.name && selectedTime ? (
         <>

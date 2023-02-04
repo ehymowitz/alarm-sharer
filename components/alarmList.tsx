@@ -3,6 +3,7 @@ import { useAtom } from "jotai";
 import React from "react";
 import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { useQuery } from "react-query";
+import tw from "twrnc";
 import { listFiles } from "../firebase/utilFunctions";
 import useDownloadAlarm from "../hooks/useDownloadAlarm";
 import { alarmAtom } from "../jotai";
@@ -17,12 +18,12 @@ const AlarmList = () => {
   const { setDownloadName, alarmDownloading } = useDownloadAlarm();
   const [storedAlarm] = useAtom(alarmAtom);
 
-  if (isFetching) return <RegularText>Loading...</RegularText>;
+  if (isFetching) return <ActivityIndicator color="#f9fafb" />;
 
   if (!alarms || alarms.length === 0) return <RegularText>None</RegularText>;
 
   return (
-    <TextContainer>
+    <TextContainer additionalStyles="bg-slate-500 rounded px-10">
       {alarms.map((alarm) => {
         const selected = ShallowEqual<AlarmDisplayInfo>(
           alarm,
@@ -38,18 +39,22 @@ const AlarmList = () => {
               <Ionicons
                 name={selected ? "checkmark" : "download-outline"}
                 size={16}
-                color="black"
+                color="#f9fafb"
+                style={tw`pr-1`}
               />
-              <RegularText bold={selected}>{alarm.name}</RegularText>
               <RegularText bold={selected}>
-                {" "}
-                - by: {alarm.composer}{" "}
+                {alarm.name} - by: {alarm.composer}
               </RegularText>
             </HorizontalContainer>
-            {selected && alarmDownloading && <ActivityIndicator />}
           </TouchableOpacity>
         );
       })}
+      {alarmDownloading && (
+        <ActivityIndicator
+          style={tw`absolute top-1/2 left-1/2`}
+          color="#f9fafb"
+        />
+      )}
     </TextContainer>
   );
 };

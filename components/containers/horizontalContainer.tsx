@@ -3,7 +3,7 @@ import { View } from "react-native";
 import tw from "twrnc";
 
 const HorizontalContainer = ({ children }: PropsWithChildren) => {
-  return <View style={tw`p-4 flex-row`}>{children}</View>;
+  return <View style={tw`py-4 flex-row justify-center`}>{children}</View>;
 };
 
 export default HorizontalContainer;

@@ -9,7 +9,7 @@ interface PrimaryButtonProps {
 
 const PrimaryButton = ({ onPress, title }: PrimaryButtonProps) => (
   <TouchableHighlight style={tw`my-2 h-10 w-full`}>
-    <Button onPress={onPress} title={title} />
+    <Button onPress={onPress} title={title} color="#292524" />
   </TouchableHighlight>
 );
 

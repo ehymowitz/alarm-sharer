@@ -22,7 +22,7 @@ const TextBox = ({
   return (
     <TextContainer>
       <TextInput
-        style={tw`h-10 bg-white p-2 my-2`}
+        style={tw`h-10 bg-white p-2 my-2 bg-slate-500 text-white rounded`}
         onChangeText={setText}
         value={text}
         placeholder={placeholder}
