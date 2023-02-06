@@ -22,7 +22,10 @@ const Container = ({
 }: PropsWithChildren<ContainerProps>) => {
   return topLevel ? (
     <SafeAreaView style={tw`h-full`}>
-      <ChildrenView children={children} additionalStyles={additionalStyles} />
+      <ChildrenView
+        children={children}
+        additionalStyles={`pt-10 ${additionalStyles}`}
+      />
     </SafeAreaView>
   ) : (
     <ChildrenView children={children} additionalStyles={additionalStyles} />

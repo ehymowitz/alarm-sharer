@@ -4,20 +4,20 @@ import tw from "../../lib/tailwind";
 
 interface RegularTextProps {
   bold?: boolean;
-  addtionalStyles?: string;
+  additionalStyles?: string;
 }
 
 const RegularText = ({
   children,
   bold = false,
-  addtionalStyles = "",
+  additionalStyles = "",
 }: PropsWithChildren<RegularTextProps>) => {
   return (
     <Text
       style={tw.style(
-        `font-body font-2xl text-gray-50`,
+        `font-body text-gray-50`,
         bold && "font-bodyBold",
-        addtionalStyles
+        additionalStyles
       )}
     >
       {children}
