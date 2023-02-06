@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import { Text } from "react-native";
-import tw from "twrnc";
+import tw from "../../lib/tailwind";
 
 interface RegularTextProps {
   bold?: boolean;

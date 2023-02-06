@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import * as Device from "expo-device";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import tw from "twrnc";
+import tw from "../lib/tailwind";
 import Home from "../screens/alarm";
 import Clock from "../screens/clock";
 import { RootStackParamList } from "./navigation";

@@ -1,6 +1,6 @@
 import React from "react";
 import { TextInput } from "react-native";
-import tw from "twrnc";
+import tw from "../../lib/tailwind";
 import TextContainer from "../containers/textContainer";
 import ErrorText from "../typography/errorText";
 

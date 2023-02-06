@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import { View } from "react-native";
-import tw from "twrnc";
+import tw from "../../lib/tailwind";
 
 interface TextContainerProps {
   additionalStyles?: string;

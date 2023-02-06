@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import tw from "twrnc";
+import tw from "../../lib/tailwind";
 
 interface ContainerProps {
   additionalStyles?: string;

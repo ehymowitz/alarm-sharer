@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, TouchableHighlight } from "react-native";
-import tw from "twrnc";
+import tw from "../../lib/tailwind";
 
 interface PrimaryButtonProps {
   onPress?: () => void;
