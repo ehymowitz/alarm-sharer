@@ -1,6 +1,7 @@
 import React from "react";
-import { Button, TouchableHighlight } from "react-native";
+import { TouchableHighlight } from "react-native";
 import tw from "../../lib/tailwind";
+import RegularText from "../typography/regularText";
 
 interface PrimaryButtonProps {
   onPress?: () => void;
@@ -8,8 +9,11 @@ interface PrimaryButtonProps {
 }
 
 const PrimaryButton = ({ onPress, title }: PrimaryButtonProps) => (
-  <TouchableHighlight style={tw`my-2 h-10 w-full`}>
-    <Button onPress={onPress} title={title} color="#292524" />
+  <TouchableHighlight
+    style={tw`my-2 h-10 w-full bg-stone-800 rounded flex items-center justify-center`}
+    onPress={onPress}
+  >
+    <RegularText bold>{title}</RegularText>
   </TouchableHighlight>
 );
 

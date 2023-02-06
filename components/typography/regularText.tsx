@@ -14,7 +14,11 @@ const RegularText = ({
 }: PropsWithChildren<RegularTextProps>) => {
   return (
     <Text
-      style={tw.style(`text-gray-50`, bold && "font-bold", addtionalStyles)}
+      style={tw.style(
+        `font-body font-2xl text-gray-50`,
+        bold && "font-bodyBold",
+        addtionalStyles
+      )}
     >
       {children}
     </Text>

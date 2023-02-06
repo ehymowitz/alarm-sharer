@@ -10,6 +10,8 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@expo-google-fonts/roboto": "^0.2.2",
+    "@expo-google-fonts/roboto-slab": "^0.2.2",
     "@expo/webpack-config": "^0.17.2",
     "@mui/material": "^5.11.3",
     "@mui/x-date-pickers": "^5.0.13",
@@ -26,6 +28,7 @@
     "expo-device": "~5.0.0",
     "expo-document-picker": "~11.0.1",
     "expo-file-system": "^15.1.1",
+    "expo-font": "~11.0.1",
     "expo-splash-screen": "~0.17.5",
     "expo-status-bar": "~1.4.2",
     "firebase": "^9.14.0",

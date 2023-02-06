@@ -5,7 +5,7 @@ import tw from "../../lib/tailwind";
 interface ErrorTextProps {}
 
 const ErrorText = ({ children }: PropsWithChildren<ErrorTextProps>) => {
-  return <Text style={tw`text-red-400`}>{children}</Text>;
+  return <Text style={tw`font-body text-red-400`}>{children}</Text>;
 };
 
 export default ErrorText;

@@ -14,7 +14,11 @@ module.exports = {
       "6xl": "2.125rem",
     },
     extend: {
-      fontFamily: {},
+      fontFamily: {
+        title: "RobotoSlab_600SemiBold",
+        body: "Roboto_400Regular",
+        bodyBold: "Roboto_700Bold",
+      },
     },
   },
 };
