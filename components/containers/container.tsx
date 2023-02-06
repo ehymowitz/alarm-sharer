@@ -12,7 +12,7 @@ const ChildrenView = ({
   children,
   additionalStyles,
 }: PropsWithChildren<ContainerProps>) => (
-  <View style={tw`py-4, ${additionalStyles || ""}`}>{children}</View>
+  <View style={tw`${additionalStyles || ""}`}>{children}</View>
 );
 
 const Container = ({
