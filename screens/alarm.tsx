@@ -8,7 +8,7 @@ import LinkText from "../components/typography/linkText";
 import TitleText from "../components/typography/titleText";
 
 const APP_LINK =
-  "https://expo.dev/accounts/ehymowitz/projects/alarm-sharer/builds/576f940a-542a-4d5f-aaa4-5c758506ef1d";
+  "https://expo.dev/accounts/ehymowitz/projects/alarm-sharer/builds/887dd32a-e985-4d95-b318-ccf61b7fd501";
 
 const Home = () => {
   return (
