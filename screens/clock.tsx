@@ -53,7 +53,9 @@ const Clock = () => {
         </>
       ) : (
         <Container additionalStyles="flex items-center">
-          <TitleText additionalStyles="text-xl">Select an alarm</TitleText>
+          <TitleText additionalStyles="text-xl">
+            Select an alarm and a time
+          </TitleText>
         </Container>
       )}
     </Container>
