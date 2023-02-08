@@ -14,7 +14,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.ehymowitz.alarmsharer"
@@ -24,8 +26,14 @@
         "foregroundImage": "./assets/adaptive-icon-img.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.ehymowitz.alarmsharer"
+      "package": "com.ehymowitz.alarmsharer",
+      "versionCode": 1
     },
-    "web": {}
+    "web": {},
+    "extra": {
+      "eas": {
+        "projectId": "4ef1ad2d-0f6e-4acd-a014-4d486bdc7f0c"
+      }
+    }
   }
 }
