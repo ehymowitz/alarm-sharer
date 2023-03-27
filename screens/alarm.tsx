@@ -8,7 +8,7 @@ import LinkText from "../components/typography/linkText";
 import TitleText from "../components/typography/titleText";
 
 const APP_LINK =
-  "https://expo.dev/accounts/ehymowitz/projects/alarm-sharer/builds/887dd32a-e985-4d95-b318-ccf61b7fd501";
+  "https://drive.google.com/drive/folders/1RmF0a7G3APrRk7CB4eq6gBTBAkKrIBv0?usp=share_link";
 
 const Home = () => {
   return (
